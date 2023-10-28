@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <CustomSwiper />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CustomSwiper from './components/CustomSwiper.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    CustomSwiper
   }
 }
 </script>

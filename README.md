@@ -1,24 +1,15 @@
-# swiper-demo
+# swiper-scale-demo
 
-## Project setup
+## 安装
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+## 启动
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 功能
+- Swiper 实现滑动时中间元素放大效果
+- 一次最多只能滑动一个元素
