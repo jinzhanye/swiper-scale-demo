@@ -10,8 +10,6 @@
      <swiper-slide>Slide 1</swiper-slide>
      <swiper-slide>Slide 2</swiper-slide>
      <swiper-slide>Slide 3</swiper-slide>
-<!--     <swiper-slide>Slide 4</swiper-slide>-->
-     <div class="swiper-pagination" slot="pagination"></div>
    </swiper>
  </div>
 </template>
@@ -36,10 +34,6 @@ export default {
         slidesPerView: 3,
         spaceBetween: 30,
         centeredSlides: true,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true
-        }
       }
     }
   },
@@ -71,10 +65,6 @@ export default {
       return this.$refs.mySwiper.$swiper
     }
   },
-  mounted() {
-    // console.log('Current Swiper instance object', this.swiper)
-    // this.swiper.slideTo(3, 1000, false)
-  }
 }
 </script>
 
@@ -101,6 +91,7 @@ export default {
     transform: scale(1);
   }
 
+  /* 解决滑动时偶尔抖动的问题 */
   .swiper-slide.swiper-slide-duplicate-active {
     transform: scale(1);
   }
