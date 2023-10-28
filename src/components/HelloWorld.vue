@@ -1,58 +1,108 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+ <div>
+   <swiper ref="mySwiper"
+           :options="swiperOptions"
+           :auto-play="false"
+           @touch-start="onTouchStart"
+           @touch-move="onTouchmove"
+           @touch-end="onTouchend"
+   >
+     <swiper-slide>Slide 1</swiper-slide>
+     <swiper-slide>Slide 2</swiper-slide>
+     <swiper-slide>Slide 3</swiper-slide>
+<!--     <swiper-slide>Slide 4</swiper-slide>-->
+     <div class="swiper-pagination" slot="pagination"></div>
+   </swiper>
+ </div>
 </template>
 
 <script>
+import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
+import 'swiper/css/swiper.css'
+
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  name: 'carrousel-view',
+  components: {
+    Swiper,
+    SwiperSlide
+  },
+  directives: {
+    swiper: directive
+  },
+  data() {
+    return {
+      swiperOptions: {
+        loop: true,
+        slidesPerView: 3,
+        // threshold: 100, // 定义滑动的临界点为50像素
+        spaceBetween: 30,
+        centeredSlides: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        }
+        // Some Swiper option/callback...
+      }
+    }
+  },
+  methods:{
+    onTouchStart(event){
+      this.startX = event.touches[0].clientX; // 获取触摸起始点的水平坐标
+    },
+    onTouchmove(event) {
+      const threshold = 100
+      const distance = event.touches[0].clientX - this.startX
+      const isLeft = distance > 0
+      const distanceAbs = Math.abs(distance) // 计算滑动距离
+      console.log('滑动距离：' + distance + '像素');
+      console.log(isLeft)
+
+      if (distanceAbs > threshold) {
+        this.swiper.allowTouchMove = false; // 禁止继续滑动s
+      }
+    },
+    onTouchend(){
+      this.swiper.allowTouchMove = true;
+    },
+  },
+  computed: {
+    swiper() {
+      return this.$refs.mySwiper.$swiper
+    }
+  },
+  mounted() {
+    // console.log('Current Swiper instance object', this.swiper)
+    // this.swiper.slideTo(3, 1000, false)
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+<style lang="scss">
+.swiper-container {
+  height: 300px;
+  width: 100%;
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: #2c3e50;
+    color: #fff;
+    transition: transform 0.4s ease; /* 添加滑动动画效果 */
+    transform: scale(0.8); /* 默认缩小效果 */
+  }
+
+  /* 当前激活的幻灯片放大 */
+  .swiper-slide.swiper-slide-active {
+    transform: scale(1);
+  }
+
+  .swiper-slide.swiper-slide-duplicate-active {
+    transform: scale(1);
+  }
 }
 </style>
+

@@ -4,12 +4,15 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "dev": "npm run serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "core-js": "^3.8.3",
-    "vue": "^2.6.14"
+    "swiper": "^5.3.8",
+    "vue": "^2.6.14",
+    "vue-awesome-swiper": "^4.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -19,6 +22,8 @@
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
+    "sass": "^1.69.5",
+    "sass-loader": "^13.3.2",
     "vue-template-compiler": "^2.6.14"
   },
   "eslintConfig": {
