@@ -7,9 +7,11 @@
            @touch-move="onTouchmove"
            @touch-end="onTouchend"
    >
-     <swiper-slide>Slide 1</swiper-slide>
-     <swiper-slide>Slide 2</swiper-slide>
-     <swiper-slide>Slide 3</swiper-slide>
+     <swiper-slide
+         v-for="(item, index) in list"
+         :key="index">
+       {{  item  }}
+     </swiper-slide>
    </swiper>
  </div>
 </template>
@@ -29,6 +31,8 @@ export default {
   },
   data() {
     return {
+      // 经测试 list 是可以动态修改的，可以做懒加载
+      list: ['Slide 1', 'Slide 2', 'Slide 3'],
       swiperOptions: {
         loop: true,
         slidesPerView: 3,
@@ -61,6 +65,7 @@ export default {
     },
   },
   computed: {
+    // 不要用这种快捷方式，styleListKey++ 后 swiper 重新渲染不会触发 computed swiper 更新，computed swiper 一直是旧的实例
     swiper() {
       return this.$refs.mySwiper.$swiper
     }
